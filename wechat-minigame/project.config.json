@@ -1,0 +1,34 @@
+{
+  "description": "纸飞机漫游 · 原生 Canvas 治愈飞行小游戏",
+  "projectname": "纸飞机漫游",
+  "appid": "wxedf8b0ff920cc0ee",
+  "compileType": "game",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "minified": true,
+    "urlCheck": true
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "file",
+        "value": "README.md"
+      },
+      {
+        "type": "file",
+        "value": "UPLOAD.md"
+      },
+      {
+        "type": "file",
+        "value": "build-info.json"
+      },
+      {
+        "type": "file",
+        "value": "VALIDATION.md"
+      }
+    ],
+    "include": []
+  },
+  "condition": {}
+}

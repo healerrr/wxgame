@@ -1,0 +1,19 @@
+{
+  "version": "2.2.0",
+  "appid": "wxedf8b0ff920cc0ee",
+  "entrySHA256": "d4772463feae9beaf7e5d49478aabff85438faa15dd52117511ee92f6898f395",
+  "modules": {
+    "adventure": "7cda8caafdc5fc9d420456994fc66a4bc4e04a8bc02f0e27df27c77f6ae3dab0",
+    "view": "e89ff965d7aba65abc8c413a0bdd697cc8053b63a43778336291fe169a38fc80",
+    "scenery": "b2e502476cc232442d4142c66be8a0409a12e641c97f1e3d3d28bc51d8667aa5",
+    "weather": "101cc57c06ade23dfa5dee715c0f7b2149d1a8081fce4897a6d2d72bc8deb7a5",
+    "assets": "422da1bed70a5762f49620f793c04b5db38cb1653dc9f17b8c6daf4c82d7b086"
+  },
+  "artwork": {
+    "dawn.jpg": "563c3a1ef80af4cb7699840d0a3c2a0874324f3007549b54936a8acbb4b1408f",
+    "dusk.jpg": "5246ef0aee163680f793fd6d11dde3ca2d9535281779ab9fb136b1c07f53c59c",
+    "forest.jpg": "c6f2ff977ef7875c306cd08cd6dcc5f7df42718cb18abc6fb5ba5cbcdc6c7336",
+    "heaven.jpg": "03cc3e0d9132cdc68dfd91431da33d2d8a53f27f6309bb023d14a46913d44e66",
+    "moon-animals.png": "5c18282fd7565c308a0d8d3634ac546b0d2c6766778914b54b4864711f59e329"
+  }
+}

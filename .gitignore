@@ -1,0 +1,16 @@
+# Local previews, screenshots and generated distribution archives
+/artifacts/
+/*.zip
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local environment and editor/agent state
+.env
+.env.*
+!.env.example
+.codex/
+.agents/
+.aws/
+wechat-minigame/project.private.config.json

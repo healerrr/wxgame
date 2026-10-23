@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102953">
+  <meta name="description" content="驾驶一架纸飞机，穿过流动的星光、晚霞与风。一个没有失败的 p5.js 治愈漫游游戏。">
+  <title>纸飞机漫游</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="vendor/p5.min.js"></script>
+  <script defer src="journey.js"></script>
+  <script defer src="scenery.js"></script>
+  <script defer src="weather.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <main id="world" aria-label="纸飞机飞行画布"></main>
+  <div class="vignette" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="纸飞机漫游首页">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 13 29 3 20 29 14 19 3 13Z" stroke="currentColor" stroke-width="1.3"/><path d="m14 19 15-16-10 19" stroke="currentColor" stroke-width="1.1"/></svg>
+      <span>纸飞机漫游<small>PAPERPLANE ROAM</small></span>
+    </a>
+    <div class="top-actions">
+      <span class="edition">一场轻盈的出走 <i></i> 随风 · 拾光</span>
+      <button class="icon-button" id="journal" aria-label="打开风的手记" title="风的手记 · J"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="journal-count" id="journal-count" hidden>0</span></button>
+      <button class="icon-button" id="calm" aria-label="开启舒缓模式" aria-pressed="false" title="舒缓模式：慢速与轻动效"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 4C8 2 2 8 6 15c5 7 15 1 13-11Z M5 20 16 8M10 15v-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="icon-button" id="sound" aria-label="开启环境音" title="环境音" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path class="sound-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path class="sound-off" d="m16 10 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button class="icon-button" id="pause" aria-label="暂停飞行" title="暂停 / 空格键" aria-pressed="false"><svg class="pause-icon" viewBox="0 0 24 24" fill="none"><path d="M8 6v12M16 6v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><svg class="play-icon" viewBox="0 0 24 24" fill="none"><path d="m9 6 9 6-9 6V6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>
+      <button class="icon-button fullscreen" id="fullscreen" aria-label="进入全屏" title="全屏"><svg viewBox="0 0 24 24" fill="none"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </header>
+  <section id="intro" class="intro">
+    <div class="eyebrow"><span></span> FOLLOW THE WIND, FIND YOUR PEACE</div>
+    <h1>把心事，<br>交给<span>风。</span></h1>
+    <p>掠过山谷，穿进云海，追一束落日的光。<br>向上借风，向下滑翔，飞进风景的深处。</p>
+    <div class="mode-options" role="group" aria-label="选择漫游方式">
+      <button class="mode-option active" data-mode="seek" aria-pressed="true"><strong>寻光漫游 <span>✧</span></strong><small>拾微光 · 穿风环 · 收一封来信</small></button>
+      <button class="mode-option" data-mode="drift" aria-pressed="false"><strong>自在飞行 <span>≈</span></strong><small>借风滑翔 · 偶遇风景里的秘密</small></button>
+    </div>
+    <button class="start" id="start">开始漫游 <svg viewBox="0 0 28 20" fill="none"><path d="M2 10h22m-7-7 7 7-7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="intro-note">不必抵达哪里，飞一会儿就好。</div>
+  </section>
+  <aside id="flight-info" class="flight-info" aria-label="飞行状态"><span>已随风飞行</span><strong id="distance">0<small>m</small></strong><div><span class="star-glyph">✧</span> 拾光 <b id="collected">00</b></div><button id="mode-switch" class="mode-switch" title="切换漫游方式">寻光漫游 ⇄</button></aside>
+  <aside class="flight-telemetry" id="flight-telemetry" aria-label="风与飞行">
+    <div class="flight-condition"><span id="flight-label">顺风滑翔</span><span><b id="flight-speed">1.0</b> ×</span></div>
+    <div class="flight-altitude"><span>飞行高度</span><strong id="flight-altitude">云间</strong></div>
+    <div class="wind-reserve"><span>风能</span><meter id="wind-energy" min="0" max="1" value="1" aria-label="可用风能">100%</meter></div>
+    <div class="discovery-note"><span>秘境 <b id="discovery-count">0</b></span><span id="discovery-name">循着微光，遇见远方</span></div>
+  </aside>
+  <button id="boost" class="boost-button" aria-label="按住乘风加速，消耗风能" title="按住 Shift 或此按钮乘风" aria-pressed="false"><span>乘风</span><small>按住加速</small></button>
+  <aside class="journey-panel" id="journey-panel" aria-label="可选的寻光旅程" hidden>
+    <div class="journey-kicker">A LITTLE JOURNEY <span>无需赶路</span></div>
+    <h2 id="journey-title">拾起五束微光</h2>
+    <p id="journey-description">跟随暖色微光，轻轻靠近就好。</p>
+    <div class="journey-meter"><div class="journey-progress" id="journey-progress" aria-hidden="true"></div><span id="journey-count">0 / 5</span></div>
+    <p id="journey-next">这一程的尽头，有一封风的来信。</p>
+    <div class="journey-steps" id="journey-steps" aria-hidden="true"><i class="active"></i><i></i><i></i></div>
+  </aside>
+  <div class="chapter" id="chapter" aria-live="polite" aria-hidden="true"><span id="chapter-en">THE BLUE HOUR</span><strong id="chapter-title">深蓝之境</strong><p id="chapter-poem">慢一点，风会等你。</p></div>
+  <div id="toast" class="toast" role="status"></div>
+  <div id="gesture-tip" class="gesture-tip" aria-hidden="true">向上借风，向下滑翔 · 靠近微光，发现秘境</div>
+  <div id="paused" class="paused" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden><span id="pause-title">让风，也歇一会儿</span><button id="resume">继续飞行 →</button><small>空格继续 · 此刻的旅程已为你收藏</small></div>
+  <dialog id="journal-dialog" class="journal-dialog" aria-labelledby="journal-title">
+    <div class="journal-header"><div><span class="eyebrow">LETTERS CARRIED BY THE WIND</span><h2 id="journal-title">风的手记</h2><p>把走过的天空，折成一封给自己的信。</p></div><button id="close-journal" class="icon-button" aria-label="关闭风的手记">×</button></div>
+    <div class="memory-grid" id="memory-grid"></div>
+    <div class="journal-footer"><span id="journal-summary">四片天空，四封慢慢抵达的信。</span><small>旅程会自动保存在此浏览器</small></div>
+  </dialog>
+  <footer class="bottom-bar">
+    <div class="controls-hint"><svg viewBox="0 0 26 26" fill="none"><path d="M8 13V5a2 2 0 0 1 4 0v7-3a2 2 0 0 1 4 0v3-1a2 2 0 0 1 4 0v6c0 4-2 6-6 6h-1c-3 0-4-2-6-4l-3-4a2 2 0 0 1 3-2l1 1" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hint-text">鼠标 / 拖动，自由升降与转向<small>方向键 / WASD 飞行 · 按住 Shift 乘风</small></span></div>
+    <div class="scene-picker" aria-label="天空主题">
+      <div class="scene-label"><span id="scene-number">01</span><i></i><span id="scene-name">深蓝之境</span><button id="weather" class="weather-switch" aria-label="切换天气，当前随风天气" title="切换天气 · T"><span id="weather-name">随风天气</span></button><button id="auto" class="auto active" aria-label="随机流转四种风景" aria-pressed="true" title="随机流转，不连续重复，保留寻光进度">随机流转</button></div>
+      <div class="swatches">
+        <button class="swatch active" data-scene="0" aria-label="切换到深蓝之境" aria-pressed="true" style="--swatch:linear-gradient(140deg,#8bd8e9,#286aa2 55%,#243665)"><span></span></button>
+        <button class="swatch" data-scene="1" aria-label="切换到落日来信" aria-pressed="false" style="--swatch:linear-gradient(140deg,#ffe1ae,#e4a1a4 50%,#7876ac)"><span></span></button>
+        <button class="swatch" data-scene="2" aria-label="切换到萤火森林" aria-pressed="false" style="--swatch:linear-gradient(140deg,#dbdf9e,#4fae9f 48%,#174750)"><span></span></button>
+        <button class="swatch" data-scene="3" aria-label="切换到星河入梦" aria-pressed="false" style="--swatch:linear-gradient(140deg,#e5adf0,#9075ba 48%,#35365d)"><span></span></button>
+      </div>
+    </div>
+    <div class="breathing-note"><button id="breathe" aria-label="切换自在飞行，跟随光点慢慢呼吸"><span class="breath-dot"></span> 跟着风，慢慢呼吸</button><small>轻点天空 · 泛起涟漪</small></div>
+  </footer>
+  <div class="loading" id="loading">风正在赶来<span>· · ·</span></div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Keep shared browser/native source hashes stable across Windows and macOS.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.wav binary
+*.zip binary

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#18394d">
+  <meta name="description" content="从地面起飞，穿过雨雪与月光，飞向九霄。收集星光、修补机翼，珍藏六位天空守望者。">
+  <title>九霄来信 · 纸飞机冒险</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="scenery.js"></script>
+  <script defer src="weather.js"></script>
+  <script defer src="adventure.js"></script>
+  <script defer src="view.js"></script>
+  <script defer src="assets.js"></script>
+  <script defer src="sound.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <main id="world" aria-label="九霄来信游戏">
+    <canvas id="flight-canvas" tabindex="0" role="application" aria-label="九霄来信。拖动或方向键、WASD移动，默认自动射击，空格手动射击，P暂停，J查看图鉴，M开关声音。"></canvas>
+  </main>
+  <nav id="game-controls" aria-label="游戏操作"></nav>
+  <p id="game-status" class="sr-only" aria-live="polite"></p>
+  <p class="sr-only">金色星光补充星能，绿色补给恢复生命；紫色弧光、蓝色大雨滴、较大的白蓝雪团、冰雹与阵风团需要躲避。细小飘雪仅作装饰。击败动物会掉落补给并加入图鉴。目标9000米。</p>
+  <noscript>请启用 JavaScript 让纸飞机起飞。</noscript>
+</body>
+</html>
